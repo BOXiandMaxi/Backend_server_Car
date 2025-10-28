@@ -3,7 +3,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from routes.cars_routes import router as cars_router
 from Review.review_routes import router as review_router
-from Backend.data import cars
+from data import cars
 import os
 
 app = FastAPI()
