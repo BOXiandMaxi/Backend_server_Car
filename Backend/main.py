@@ -26,3 +26,18 @@ app.include_router(cars_router)
 # 🔹 Include review router
 app.include_router(review_router)
 
+# 🔹 Route สำหรับเช็คสถานะ backend และ router
+@app.get("/test")
+def test_backend():
+    return {
+        "status": "ok",
+        "routes": {
+            "cars": "/cars",
+            "reviews": "/reviews"
+        }
+    }
+
+# 🔹 Optional: Route root
+@app.get("/")
+def root():
+    return {"message": "Backend server is running. Use /test to check routes"}
