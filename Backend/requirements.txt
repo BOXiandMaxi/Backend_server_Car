@@ -2,6 +2,6 @@ fastapi==0.115.2
 uvicorn[standard]==0.23.2
 mysql-connector-python==8.1.0
 sqlalchemy==2.0.22
-matplotlib==3.7.2
-pydantic==2.3.0
+matplotlib==3.7.2       
+pydantic==2.2.2          
 python-dotenv==1.0.1
