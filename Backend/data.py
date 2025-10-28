@@ -2,7 +2,7 @@ import os
 
 # โหลดค่า backend URL จาก env
 # ตัวอย่าง: BACKEND_URL=http://127.0.0.1:8001
-BACKEND_URL = os.environ.get("BACKEND_URL", "http://127.0.0.1:8001")
+BACKEND_URL = os.environ.get("BACKEND_URL", "https://backend-server-car.onrender.com")
 
 cars_db = [
     # Toyota /////
