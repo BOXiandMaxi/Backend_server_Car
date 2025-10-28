@@ -42,7 +42,7 @@ mock_reviews_dict = {
 
 @router.get("/{car_id}")
 def get_review(car_id: str):
-    review = mock_reviews_dict.get(car_id)
+    review = mock_reviews_dict.get(str(car_id))  # แปลงเป็น string
     if not review:
         raise HTTPException(status_code=404, detail="Review not found")
     return review
