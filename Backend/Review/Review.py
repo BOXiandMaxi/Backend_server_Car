@@ -1,7 +1,13 @@
-# Backend/Review/Review.py
+import os
 from sqlalchemy import create_engine, Table, Column, Integer, String, MetaData
 
-DATABASE_URL = "mysql+pymysql://root:@localhost/searchforsales"
+DB_HOST = os.getenv("DB_HOST")
+DB_PORT = os.getenv("DB_PORT")
+DB_NAME = os.getenv("DB_NAME")
+DB_USER = os.getenv("DB_USER")
+DB_PASS = os.getenv("DB_PASS")
+
+DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 engine = create_engine(DATABASE_URL, echo=True)
 metadata = MetaData()
 
@@ -42,7 +48,7 @@ mock_reviews = [
     
 ]
 
-with engine.connect() as conn:
+with engine.begin() as conn:
     for review in mock_reviews:
         insert_stmt = carsreviews.insert().values(
             car_id=review[0],
@@ -53,6 +59,5 @@ with engine.connect() as conn:
             performance=review[5]
         )
         conn.execute(insert_stmt)
-    conn.commit()
 
-print("✅ Insert mock reviews into carsreviews table successfully!")
+print("✅ Insert mock reviews into Render Postgres successfully!")
