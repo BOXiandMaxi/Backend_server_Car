@@ -11,6 +11,33 @@ router = APIRouter()
 #     return cars_db
 
 # รถทั้งหมด (lightweight) สำหรับหน้า Home
+
+# Mock price data
+mock_prices = {
+    "1": {"price_new": 539000, "price_in_2024": 485000, "price_twohand": 469000},
+    "1.1": {"price_new": 609000, "price_in_2024": 548000, "price_twohand": 260000},
+    "1.2": {"price_new": 894000, "price_in_2024": 804600, "price_twohand": 400000},
+    "1.3": {"price_new": 1475000, "price_in_2024": 1327500, "price_twohand": 900000},
+    "2": {"price_new": 599000, "price_in_2024": 539100, "price_twohand": 458235},
+    "2.1": {"price_new": 1239000, "price_in_2024": 1115100, "price_twohand": 947800},
+    "2.2": {"price_new": 1529000, "price_in_2024": 1376100, "price_twohand": 1169600},
+    "2.3": {"price_new": 979000, "price_in_2024": 881100, "price_twohand": 748900},
+    "3": {"price_new": 529000, "price_in_2024": 476100, "price_twohand": 349000},
+    "3.1": {"price_new": 1749000, "price_in_2024": 1574100, "price_twohand": 699000},
+    "3.2": {"price_new": 820000, "price_in_2024": 738000, "price_twohand": 559000},
+    "3.3": {"price_new": 1200000, "price_in_2024": 1080000, "price_twohand": 849000},
+    "4": {"price_new": 529000, "price_in_2024": 476100, "price_twohand": 415000},
+    "4.1": {"price_new": 770000, "price_in_2024": 693000, "price_twohand": 557000},
+    "5": {"price_new": 2990000, "price_in_2024": 2691000, "price_twohand": 1500000},
+    "5.1": {"price_new": 1185000, "price_in_2024": 1066500, "price_twohand": 879000},
+    "5.2": {"price_new": 3000000, "price_in_2024": 2700000, "price_twohand": 2690000},
+    "5.3": {"price_new": 2699000, "price_in_2024": 2429100, "price_twohand": 1899000},
+    "6": {"price_new": 1760000, "price_in_2024": 158400, "price_twohand": 130000},
+    "6.1": {"price_new": 567000, "price_in_2024": 510300, "price_twohand": 439000},
+    "6.2": {"price_new": 319900, "price_in_2024": 287910, "price_twohand": 250000}
+
+}
+
 @router.get("/summary")
 async def get_cars_summary():
     return [
