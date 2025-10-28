@@ -26,7 +26,7 @@ async def get_cars_summary():
 
 
 # รถแต่ละคัน
-@router.get("/{car_id}", response_model=Car)
+@router.get("/{car_id:path}", response_model=Car)
 async def get_car(car_id: str):
     for car in cars_db:
         if car["id"] == car_id:
@@ -34,12 +34,9 @@ async def get_car(car_id: str):
     raise HTTPException(status_code=404, detail="Car not found")
 
 # ราคา
-@router.get("/{car_id}/price-data")
+@router.get("/{car_id:path}/price-data")
 async def get_price_data(car_id: str):
     data = fetch_car_prices_by_id(car_id)
     if not data:
         raise HTTPException(status_code=404, detail=f"No price data found for car id {car_id}")
-    return {
-        "car_id": car_id,
-        "prices": data
-    }
+    return {"car_id": car_id, "prices": data}
