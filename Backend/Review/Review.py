@@ -11,6 +11,7 @@ if not DATABASE_URL:
 engine = create_engine(DATABASE_URL, echo=True)
 metadata = MetaData()
 
+# สร้าง table
 carsreviews = Table(
     'carsreviews', metadata,
     Column('id', Integer, primary_key=True, autoincrement=True),
@@ -21,6 +22,9 @@ carsreviews = Table(
     Column('fuel_economy', Integer),
     Column('performance', Integer),
 )
+
+# ✅ สร้าง table ใน DB
+metadata.create_all(engine)
 
 # ✅ Mock review data
 mock_reviews = [
@@ -47,6 +51,7 @@ mock_reviews = [
     ('6.2', 6, 6, 8, 7, 5)
 ]
 
+# ✅ Insert mock data
 with engine.begin() as conn:
     for review in mock_reviews:
         insert_stmt = carsreviews.insert().values(

@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 # โหลดค่า .env
 load_dotenv()
 
-# 🔹 ใช้ DATABASE_URL จาก Render Environment Variable
 DATABASE_URL = os.getenv("DATABASE_URL")
 if not DATABASE_URL:
     raise ValueError("DATABASE_URL is not set in environment variables")

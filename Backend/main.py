@@ -8,47 +8,27 @@ import os
 
 app = FastAPI()
 
-# 🔹 CORS - ให้เฉพาะ frontend โดเมนเข้าถึงได้
-frontend_url = "https://search-car-project.vercel.app"
+# ✅ CORS ให้ React บน vercel เรียกได้
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[frontend_url],
+    allow_origins=[
+        "https://search-car-project.vercel.app",
+        "http://localhost:3000"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# 🔹 Serve รูปจากโฟลเดอร์ images
+# ✅ เปิดให้ดูภาพใน /images
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 app.mount("/images", StaticFiles(directory=os.path.join(BASE_DIR, "images")), name="images")
 
-# 🔹 Include routers
-app.include_router(cars_router)
-app.include_router(review_router)
+# ✅ รวม routers
+app.include_router(cars_router, prefix="/cars", tags=["Cars"])
+app.include_router(review_router, prefix="/reviews", tags=["Reviews"])
 
-# 🔹 Route สำหรับดูข้อมูลรถทั้งหมด
-@app.get("/cars_db")
-def get_cars():
-    return cars_db
-
-# 🔹 Route สำหรับดูข้อมูลรถตาม id
-@app.get("/cars/{car_id}")
-def get_car(car_id: str):
-    for car in cars_db:
-        if car["id"] == str(car_id):
-            return car
-    return {"error": "Car not found"}
-
-# 🔹 Route สำหรับข้อมูลราคารถตาม id
-@app.get("/cars/{car_id}/price-data")
-def get_car_price_data(car_id: str):
-    for car in cars_db:
-        if car["id"] == str(car_id):
-            # ตัวอย่างส่งราคาต่างๆ (คุณสามารถปรับตามจริง)
-            return {"prices": [car.get("price_new", 0), car.get("price_twohand", 0)]}
-    return {"prices": []}
-
-# 🔹 Optional: Route root
+# ✅ Root message
 @app.get("/")
 def root():
-    return {"message": "Backend server is running. Use /cars_db or /cars/{id} to check routes"}
+    return {"message": "Backend server is running ✅ Use /cars or /reviews"}

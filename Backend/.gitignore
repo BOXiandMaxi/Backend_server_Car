@@ -13,3 +13,12 @@ API_scraping/
 ../.history/
 ../frontend/
 ../uvicorn
+
+# Database files
+*.db
+
+# VSCode
+.vscode/
+
+# Other
+*.log
