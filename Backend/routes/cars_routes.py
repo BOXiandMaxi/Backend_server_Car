@@ -2,8 +2,295 @@ from fastapi import APIRouter, HTTPException
 from models import Car
 from data import cars_db
 from utils.putDB import fetch_car_prices_by_id
+import os
 
 router = APIRouter()
+
+BACKEND_URL = os.environ.get("BACKEND_URL", "https://backend-server-car.onrender.com")
+
+cars_db = [
+    # Toyota /////
+    {
+        "id": "1",
+        "brand": "Toyota",
+        "model": "yaris",
+        "year": 2023,
+        "price_new": 539000,
+        "price_in_2024": 485000,
+        "price_twohand": 469000,
+        "fuel_consumption": 23.3,
+        "engine":"Dual VVT-iE 1.2L",
+        "maximum_power": "110 Nm",
+        "image_url": f"{BACKEND_URL}/images/toyota/y-2023/toyota-yaris-ativ.png",
+    },
+    {
+        "id": "1.1",
+        "brand": "Toyota",
+        "model": "vios",
+        "year": 2023,
+        "price_new": 609000,
+        "price_in_2024": 548000,
+        "price_twohand": 260000,
+        "fuel_consumption": 20,
+        "engine":"เบนซิน 1.5 ลิตร, 4 สูบ, DOHC, 16 วาล์ว, Dual VVT-i ",
+        "maximum_power": " 108 แรงม้า ที่ 6,000 รอบ/นาที ",
+        "image_url": f"{BACKEND_URL}/images/toyota/y-2023/toyota-vios-2023.jpg",
+    },
+    {
+       "id": "1.2",
+        "brand": "Toyota",
+        "model": "corolla-altis",
+        "year": 2023,
+        "price_new": 894000,
+        "price_in_2024": 804600,
+        "price_twohand": 400000,
+        "fuel_consumption": 23.3,
+        "engine":"ครื่องยนต์ 1ZR-FBE,เกียร์ Super CVT-i",
+        "maximum_power": " 125 แรงม้า, แรงบิด 156 นิวตันเมตร",
+        "image_url": f"{BACKEND_URL}/images/toyota/y-2023/toyota-corolla-altis-2023.jpg", 
+    },
+    {
+       "id": "1.3",
+        "brand": "Toyota",
+        "model": "camary",
+        "year": 2023,
+        "price_new": 1475000,
+        "price_in_2024": 1327500,
+        "price_twohand": 900000,
+        "fuel_consumption": 20,
+        "engine":"เครื่องยนต์เบนซิน 2.5 ลิตร",
+        "maximum_power": "ให้กำลังสูงสุด 209 แรงม้า.",
+        "image_url": f"{BACKEND_URL}/images/toyota/y-2023/toyota-camry-2023.jpg", 
+    },
+    # Honda /////
+    {
+        "id": "2",
+        "brand": "Honda",
+        "model": "city",
+        "year": 2023,
+        "price_new": 599000,
+        "price_in_2024": 539100,
+        "price_twohand": 458235,
+        "fuel_consumption": 23.8,
+        "engine":"3-cyl DOHC 12v",
+        "maximum_power": "109 HP",
+        "image_url": f"{BACKEND_URL}/images/honda/y-2023/honda-city-2023.jpg",   
+    },
+    {
+        "id": "2.1",
+        "brand": "Honda",
+        "model": "civic",
+        "year": 2023,
+        "price_new": 1239000,
+        "price_in_2024": 1115100,
+        "price_twohand": 947800,
+        "fuel_consumption": 33,
+        "engine":"เบนซิน 1.5 ลิตร เทอร์โบ ",
+        "maximum_power": "กำลังสูงสุด 178 แรงม้า",
+        "image_url": f"{BACKEND_URL}/images/honda/y-2023/honda-civic-2023.jpg",
+    },
+    {
+        "id": "2.2",
+        "brand": "Honda",
+        "model": "accord",
+        "year": 2023,
+        "price_new": 1529000,
+        "price_in_2024": 1376100,
+        "price_twohand": 1169600,
+        "fuel_consumption": 25,
+        "engine":"เบนซิน 4 สูบ Atkinson cycle ขนาด 2.0 ลิตร ทำงานร่วมกับมอเตอร์ไฟฟ้า 2 ตัว",
+        "maximum_power": "184 แรงม้า (มอเตอร์ไฟฟ้า)",
+        "image_url": f"{BACKEND_URL}/images/honda/y-2023/honda-accord-2023.png",
+    },
+    {
+        "id": "2.3",
+        "brand": "Honda",
+        "model": "hr-v",
+        "year": 2023,
+        "price_new": 979000,
+        "price_in_2024": 881100,
+        "price_twohand": 748900,
+        "fuel_consumption": 25,
+        "engine":"รุ่นเบนซิน: เครื่องยนต์ 4 สูบ 1.5 ลิตร i-VTEC. ",
+        "maximum_power": "106 แรงม้า",
+        "image_url": f"{BACKEND_URL}/images/honda/y-2023/honda-hrv-2023.jpg",
+    },
+    # Mitsubishi /////
+    {
+        "id": "3",
+        "brand": "Mitsubishi",
+        "model": "attrage",
+        "year": 2023,
+        "price_new": 529000,
+        "price_in_2024": 476100,
+        "price_twohand": 349000,
+        "fuel_consumption": 23,
+        "engine":"รุ่นเบนซิน: เบนซิน 3 สูบ DOHC MIVEC 12 วาล์ว ความจุ 1.2 ลิตร ",
+        "maximum_power": "78 แรงม้า ที่ 6,000 รอบ/นาที ",
+        "image_url": f"{BACKEND_URL}/images/mitsubishi/y-2023/mitsubishi-attrage-2023.jpg",  
+    },
+    {
+        "id": "3.1",
+        "brand": "Mitsubishi",
+        "model": "outlander",
+        "year": 2023,
+        "price_new": 1749000,
+        "price_in_2024": 1574100,
+        "price_twohand": 699000,
+        "fuel_consumption": 20,
+        "engine":"เครื่องยนต์ 4 สูบ ขนาด 2.4 ลิตร",
+        "maximum_power": "248 แรงม้า. ระบบขับเคลื่อนปลั๊กอินไฮบริด",
+        "image_url": f"{BACKEND_URL}/images/mitsubishi/y-2023/mitsubishi-outlander-2023.png",
+    },
+    {
+        "id": "3.2",
+        "brand": "Mitsubishi",
+        "model": "triton",
+        "year": 2023,
+        "price_new": 820000,
+        "price_in_2024": 738000,
+        "price_twohand": 559000,
+        "fuel_consumption": 20,
+        "engine":"เครื่องยนต์ดีเซล 4 สูบ ขนาด 2.4 ลิตร เทอร์โบแปรผัน (VG-Turbo) อินเตอร์คูลเลอร์",
+        "maximum_power": "184 แรงม้า ที่ 3,500 รอบ/นาที ",
+        "image_url": f"{BACKEND_URL}/images/mitsubishi/y-2023/mitsubishi-triton-2023.jpg",
+    },
+    {
+        "id": "3.3",
+        "brand": "Mitsubishi",
+        "model": "pajero",
+        "year": 2023,
+        "price_new": 1200000,
+        "price_in_2024": 1080000,
+        "price_twohand": 849000,
+        "fuel_consumption": 15.2,
+        "engine":"มาพร้อมเครื่องยนต์ดีเซล 2.4 ลิตร เทอร์โบ",
+        "maximum_power": "181 แรงม้า แรงบิด 430 นิวตันเมตร",
+        "image_url": f"{BACKEND_URL}/images/mitsubishi/y-2023/mitsubishi-pajero-2023.png",
+    },
+    # Mazda /////
+    {
+        "id": "4",
+        "brand": "Mazda",
+        "model": "Mazda2",
+        "year": 2023,
+        "price_new": 529000,
+        "price_in_2024": 476100,
+        "price_twohand": 415000,
+        "fuel_consumption": 23.6,
+        "engine":"เครื่องยนต์เบนซิน (1.3 Skyactiv-G)",
+        "maximum_power": " 93 แรงม้า ที่ 5,800 รอบต่อนาที",
+        "image_url": f"{BACKEND_URL}/images/mazda/y-2023/mazda-2023.jpg",
+    },
+    {
+        "id": "4.1",
+        "brand": "Mazda",
+        "model": "Mazda CX-3",
+        "year": 2023,
+        "price_new": 770000,
+        "price_in_2024": 693000,
+        "price_twohand": 557000,
+        "fuel_consumption":16.4,
+        "engine":"SKYACTIV-G 2.0 ลิตร เบนซิน",
+        "maximum_power": " 156 แรงม้า ที่ 6,000 รอบ/นาที",
+        "image_url": f"{BACKEND_URL}/images/mazda/y-2023/mazda-cx-3-2023.jpg",
+    },
+    # Subaru
+    {
+        "id": "5",
+        "brand": "Subaru",
+        "model": "Subaru Outback",
+        "year": 2023,
+        "price_new": 2990000,
+        "price_in_2024": 2691000,
+        "price_twohand": 1500000,
+        "fuel_consumption":7.3,
+        "engine":"บ็อกเซอร์ 4 สูบ ขนาด 2.5 ลิตร ",
+        "maximum_power": " ให้กำลังสูงสุด 188 แรงม้า",
+        "image_url": f"{BACKEND_URL}/images/subaru/y-2023/subaru-outback-2023.jpg",
+    },
+    {
+        "id": "5.1",
+        "brand": "Subaru",
+        "model": "Subaru Forester",
+        "year": 2023,
+        "price_new": 1185000,
+        "price_in_2024": 1066500,
+        "price_twohand": 879000,
+        "fuel_consumption":13.2,
+        "engine":"เครื่องยนต์เบนซิน 4 สูบนอน 2.0 ลิตร",
+        "maximum_power": "156 แรงม้า และแรงบิดสูงสุด 196 นิวตันเมตร ที่ 4,000 รอบ/นาที. ",
+        "image_url": f"{BACKEND_URL}/images/subaru/y-2023/subaru-forester-2023.jpg",
+    },
+    {
+        "id": "5.2",
+        "brand": "Subaru",
+        "model": "Subaru WRX",
+        "year": 2023,
+        "price_new": 3000000,
+        "price_in_2024": 2700000,
+        "price_twohand": 2690000,
+        "fuel_consumption":10.4,
+        "engine":"เบนซิน Boxer 4 สูบนอน เทอร์โบ 2.4 ลิตร ",
+        "maximum_power": " 275 แรงม้า (PS) ที่ 5,600 รอบ/นาที ",
+        "image_url": f"{BACKEND_URL}/images/subaru/y-2023/subaru-wrx-2023.jpg",
+    },
+    {
+        "id": "5.3",
+        "brand": "Subaru",
+        "model": "Subaru BRZ",
+        "year": 2023,
+        "price_new":  2699000,
+        "price_in_2024": 2429100,
+        "price_twohand": 1899000,
+        "fuel_consumption":15,
+        "engine":"เครื่องยนต์บ็อกเซอร์2.4 ลิตร Boxer Engine. ",
+        "maximum_power": "237 แรงม้า ขับเคลื่อนล้อหลัง",
+        "image_url": f"{BACKEND_URL}/images/subaru/y-2023/subaru-brz-2023.jpg",
+    },
+    # Suzuki /////////
+    {
+        "id": "6",
+        "brand": "Suzuki",
+        "model": "Suzuki Jimny",
+        "year": 2023,
+        "price_new":  1760000,
+        "price_in_2024": 158400,
+        "price_twohand": 130000,
+        "fuel_consumption":6.8,
+        "engine":"เครื่องยนต์เบนซิน 4 สูบ ขนาด 1.5 ลิตร",
+        "maximum_power": "กำลังสูงสุด 102 แรงม้า ที่ 6,000 รอบ/นาที และแรงบิดสูงสุด 130 นิวตันเมตร ที่ 4,000 รอบ/นาที",
+        "image_url": f"{BACKEND_URL}/images/suzuki/y-2023/suzuki-jimny-2023.jpg",
+    },
+    {
+        "id": "6.1",
+        "brand": "Suzuki",
+        "model": "Suzuki Swift",
+        "year": 2023,
+        "price_new":  567000,
+        "price_in_2024": 510300,
+        "price_twohand": 439000,
+        "fuel_consumption":23,
+        "engine":"เครื่องยนต์เบนซิน 4 สูบ ขนาด 1.2 ลิตร",
+        "maximum_power": "กำลังสูงสุดอยู่ที่ 83 แรงม้า",
+        "image_url": f"{BACKEND_URL}/images/suzuki/y-2023/suzuki-swift-2023.jpg",
+    },
+    {
+        "id": "6.2",
+        "brand": "Suzuki",
+        "model": "Suzuki Celerio",
+        "year": 2023,
+        "price_new":  319900,
+        "price_in_2024": 287910,
+        "price_twohand": 250000,
+        "fuel_consumption":20,
+        "engine":"เครื่องยนต์เบนซินรหัส K10B ขนาด 1.0 ลิตร 3 สูบ 12 วาล์ว",
+        "maximum_power": "กำลังสูงสุด 68 แรงม้า ที่ 6,000 รอบต่อนาที และแรงบิดสูงสุด 90 นิวตันเมตร ที่ 3,500 รอบต่อนาที.",
+        "image_url": f"{BACKEND_URL}/images/suzuki/y-2023/suzuki-celerio-2023.jpg",
+    },
+
+
+]
 
 # # ✅ รถทั้งหมด
 # @router.get("/", response_model=list[Car])
@@ -13,30 +300,30 @@ router = APIRouter()
 # รถทั้งหมด (lightweight) สำหรับหน้า Home
 
 # Mock price data
-mock_prices = {
-    "1": {"price_new": 539000, "price_in_2024": 485000, "price_twohand": 469000},
-    "1.1": {"price_new": 609000, "price_in_2024": 548000, "price_twohand": 260000},
-    "1.2": {"price_new": 894000, "price_in_2024": 804600, "price_twohand": 400000},
-    "1.3": {"price_new": 1475000, "price_in_2024": 1327500, "price_twohand": 900000},
-    "2": {"price_new": 599000, "price_in_2024": 539100, "price_twohand": 458235},
-    "2.1": {"price_new": 1239000, "price_in_2024": 1115100, "price_twohand": 947800},
-    "2.2": {"price_new": 1529000, "price_in_2024": 1376100, "price_twohand": 1169600},
-    "2.3": {"price_new": 979000, "price_in_2024": 881100, "price_twohand": 748900},
-    "3": {"price_new": 529000, "price_in_2024": 476100, "price_twohand": 349000},
-    "3.1": {"price_new": 1749000, "price_in_2024": 1574100, "price_twohand": 699000},
-    "3.2": {"price_new": 820000, "price_in_2024": 738000, "price_twohand": 559000},
-    "3.3": {"price_new": 1200000, "price_in_2024": 1080000, "price_twohand": 849000},
-    "4": {"price_new": 529000, "price_in_2024": 476100, "price_twohand": 415000},
-    "4.1": {"price_new": 770000, "price_in_2024": 693000, "price_twohand": 557000},
-    "5": {"price_new": 2990000, "price_in_2024": 2691000, "price_twohand": 1500000},
-    "5.1": {"price_new": 1185000, "price_in_2024": 1066500, "price_twohand": 879000},
-    "5.2": {"price_new": 3000000, "price_in_2024": 2700000, "price_twohand": 2690000},
-    "5.3": {"price_new": 2699000, "price_in_2024": 2429100, "price_twohand": 1899000},
-    "6": {"price_new": 1760000, "price_in_2024": 158400, "price_twohand": 130000},
-    "6.1": {"price_new": 567000, "price_in_2024": 510300, "price_twohand": 439000},
-    "6.2": {"price_new": 319900, "price_in_2024": 287910, "price_twohand": 250000}
+# mock_prices = {
+#     "1": {"price_new": 539000, "price_in_2024": 485000, "price_twohand": 469000},
+#     "1.1": {"price_new": 609000, "price_in_2024": 548000, "price_twohand": 260000},
+#     "1.2": {"price_new": 894000, "price_in_2024": 804600, "price_twohand": 400000},
+#     "1.3": {"price_new": 1475000, "price_in_2024": 1327500, "price_twohand": 900000},
+#     "2": {"price_new": 599000, "price_in_2024": 539100, "price_twohand": 458235},
+#     "2.1": {"price_new": 1239000, "price_in_2024": 1115100, "price_twohand": 947800},
+#     "2.2": {"price_new": 1529000, "price_in_2024": 1376100, "price_twohand": 1169600},
+#     "2.3": {"price_new": 979000, "price_in_2024": 881100, "price_twohand": 748900},
+#     "3": {"price_new": 529000, "price_in_2024": 476100, "price_twohand": 349000},
+#     "3.1": {"price_new": 1749000, "price_in_2024": 1574100, "price_twohand": 699000},
+#     "3.2": {"price_new": 820000, "price_in_2024": 738000, "price_twohand": 559000},
+#     "3.3": {"price_new": 1200000, "price_in_2024": 1080000, "price_twohand": 849000},
+#     "4": {"price_new": 529000, "price_in_2024": 476100, "price_twohand": 415000},
+#     "4.1": {"price_new": 770000, "price_in_2024": 693000, "price_twohand": 557000},
+#     "5": {"price_new": 2990000, "price_in_2024": 2691000, "price_twohand": 1500000},
+#     "5.1": {"price_new": 1185000, "price_in_2024": 1066500, "price_twohand": 879000},
+#     "5.2": {"price_new": 3000000, "price_in_2024": 2700000, "price_twohand": 2690000},
+#     "5.3": {"price_new": 2699000, "price_in_2024": 2429100, "price_twohand": 1899000},
+#     "6": {"price_new": 1760000, "price_in_2024": 158400, "price_twohand": 130000},
+#     "6.1": {"price_new": 567000, "price_in_2024": 510300, "price_twohand": 439000},
+#     "6.2": {"price_new": 319900, "price_in_2024": 287910, "price_twohand": 250000}
 
-}
+# }
 
 @router.get("/summary")
 async def get_cars_summary():
@@ -52,18 +339,26 @@ async def get_cars_summary():
     ]
 
 
-# รถแต่ละคัน
-@router.get("/{car_id:path}", response_model=Car)
-async def get_car(car_id: str):
-    for car in cars_db:
-        if car["id"] == car_id:
-            return car
-    raise HTTPException(status_code=404, detail="Car not found")
+# ✅ get car ตาม id
+@router.get("/{car_id}")
+def get_car(car_id: str):
+    car = next((c for c in cars_db if c["id"] == car_id), None)
+    if not car:
+        raise HTTPException(status_code=404, detail="Car not found")
+    return car
 
-# ราคา
-@router.get("/{car_id:path}/price-data")
-async def get_price_data(car_id: str):
-    data = fetch_car_prices_by_id(car_id)
-    if not data:
-        raise HTTPException(status_code=404, detail=f"No price data found for car id {car_id}")
-    return {"car_id": car_id, "prices": data}
+# ✅ เอาราคาไปใช้สร้างแท่งกราฟ
+@router.get("/{car_id}/price-data")
+def get_price_data(car_id: str):
+    car = next((c for c in cars_db if c["id"] == car_id), None)
+    if not car:
+        raise HTTPException(status_code=404, detail="Car not found")
+
+    return {
+        "car_id": car_id,
+        "prices": {
+            "price_new": car["price_new"],
+            "price_in_2024": car["price_in_2024"],
+            "price_twohand": car["price_twohand"],
+        }
+    }
