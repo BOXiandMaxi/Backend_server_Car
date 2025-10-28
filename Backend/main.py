@@ -3,7 +3,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from routes.cars_routes import router as cars_router
 from Review.review_routes import router as review_router
-from data import cars
+from data import cars_db
 import os
 
 app = FastAPI()
@@ -31,7 +31,7 @@ app.include_router(review_router)
 # Route สำหรับดูข้อมูลรถ
 @app.get("/cars")
 def get_cars():
-    return {"data": cars}
+    return {"data": cars_db}
 
 # 🔹 Optional: Route root
 @app.get("/")
