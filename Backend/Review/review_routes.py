@@ -2,47 +2,38 @@ from fastapi import APIRouter, HTTPException
 
 router = APIRouter(prefix="/reviews", tags=["reviews"])
 
-# Mock reviews
+# Mock reviews (list ของ dict)
 mock_reviews = [
-    ('1', 7, 7, 9, 9, 6),
-    ('1.1', 8, 7, 8, 8, 7),
-    ('1.2', 8, 8, 8, 9, 7),
-    ('1.3', 9, 9, 8, 8, 9),
-    ('2', 8, 7, 8, 9, 7),
-    ('2.1', 9, 8, 8, 8, 9),
-    ('2.2', 9, 9, 8, 9, 8),
-    ('2.3', 8, 8, 8, 8, 7),
-    ('3', 6, 6, 8, 8, 6),
-    ('3.1', 8, 8, 8, 8, 8),
-    ('3.2', 8, 7, 8, 7, 8),
-    ('3.3', 9, 8, 8, 6, 8),
-    ('4', 7, 7, 8, 8, 6),
-    ('4.1', 8, 8, 8, 6, 8),
-    ('5', 9, 9, 7, 5, 8),
-    ('5.1', 8, 8, 8, 6, 8),
-    ('5.2', 9, 7, 7, 6, 10),
-    ('5.3', 9, 7, 7, 7, 10),
-    ('6', 8, 7, 7, 5, 7),
-    ('6.1', 7, 7, 8, 8, 6),
-    ('6.2', 6, 6, 8, 7, 5)
+    {"car_id": "1",   "exterior": 7, "interior": 7, "value": 9, "fuel_economy": 9, "performance": 6},
+    {"car_id": "1.1", "exterior": 8, "interior": 7, "value": 8, "fuel_economy": 8, "performance": 7},
+    {"car_id": "1.2", "exterior": 8, "interior": 8, "value": 8, "fuel_economy": 9, "performance": 7},
+    {"car_id": "1.3", "exterior": 9, "interior": 9, "value": 8, "fuel_economy": 8, "performance": 9},
+    {"car_id": "2",   "exterior": 8, "interior": 7, "value": 8, "fuel_economy": 9, "performance": 7},
+    {"car_id": "2.1", "exterior": 9, "interior": 8, "value": 8, "fuel_economy": 8, "performance": 9},
+    {"car_id": "2.2", "exterior": 9, "interior": 9, "value": 8, "fuel_economy": 9, "performance": 8},
+    {"car_id": "2.3", "exterior": 8, "interior": 8, "value": 8, "fuel_economy": 8, "performance": 7},
+    {"car_id": "3",   "exterior": 6, "interior": 6, "value": 8, "fuel_economy": 8, "performance": 6},
+    {"car_id": "3.1", "exterior": 8, "interior": 8, "value": 8, "fuel_economy": 8, "performance": 8},
+    {"car_id": "3.2", "exterior": 8, "interior": 7, "value": 8, "fuel_economy": 7, "performance": 8},
+    {"car_id": "3.3", "exterior": 9, "interior": 8, "value": 8, "fuel_economy": 6, "performance": 8},
+    {"car_id": "4",   "exterior": 7, "interior": 7, "value": 8, "fuel_economy": 8, "performance": 6},
+    {"car_id": "4.1", "exterior": 8, "interior": 8, "value": 8, "fuel_economy": 6, "performance": 8},
+    {"car_id": "5",   "exterior": 9, "interior": 9, "value": 7, "fuel_economy": 5, "performance": 8},
+    {"car_id": "5.1", "exterior": 8, "interior": 8, "value": 8, "fuel_economy": 6, "performance": 8},
+    {"car_id": "5.2", "exterior": 9, "interior": 7, "value": 7, "fuel_economy": 6, "performance": 10},
+    {"car_id": "5.3", "exterior": 9, "interior": 7, "value": 7, "fuel_economy": 7, "performance": 10},
+    {"car_id": "6",   "exterior": 8, "interior": 7, "value": 7, "fuel_economy": 5, "performance": 7},
+    {"car_id": "6.1", "exterior": 7, "interior": 7, "value": 8, "fuel_economy": 8, "performance": 6},
+    {"car_id": "6.2", "exterior": 6, "interior": 6, "value": 8, "fuel_economy": 7, "performance": 5},
 ]
 
-# แปลงเป็น dict
-mock_reviews_dict = {
-    car_id: {
-        "car_id": car_id,
-        "exterior": exterior,
-        "interior": interior,
-        "value": value,
-        "fuel_economy": fuel,
-        "performance": performance
-    }
-    for car_id, exterior, interior, value, fuel, performance in mock_reviews
-}
+# แปลงเป็น dict สำหรับ lookup
+mock_reviews_dict = {review["car_id"]: review for review in mock_reviews}
 
+# Route สำหรับดึง review ตาม car_id
 @router.get("/{car_id}")
 def get_review(car_id: str):
-    review = mock_reviews_dict.get(str(car_id))  # แปลงเป็น string
+    review = mock_reviews_dict.get(car_id)
     if not review:
         raise HTTPException(status_code=404, detail="Review not found")
     return review
