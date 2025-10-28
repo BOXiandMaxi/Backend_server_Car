@@ -3,6 +3,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from routes.cars_routes import router as cars_router
 from Review.review_routes import router as review_router
+from Backend.data import cars
 import os
 
 app = FastAPI()
@@ -26,16 +27,11 @@ app.include_router(cars_router)
 # 🔹 Include review router
 app.include_router(review_router)
 
-# 🔹 Route สำหรับเช็คสถานะ backend และ router
-@app.get("/test")
-def test_backend():
-    return {
-        "status": "ok",
-        "routes": {
-            "cars": "/cars",
-            "reviews": "/reviews"
-        }
-    }
+
+# Route สำหรับดูข้อมูลรถ
+@app.get("/cars")
+def get_cars():
+    return {"data": cars}
 
 # 🔹 Optional: Route root
 @app.get("/")
